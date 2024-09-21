@@ -1,9 +1,27 @@
+# Part 0
+# load common stuff
+TOPDIR = ..
+include $(TOPDIR)/Makefile.common
 
-TOPDIR := ..
+# backslashify slashes to avoid problems with sed
+BPREFIX := $(subst /,\/,$(PREFIX))
 
-install : 
-	install -m 755 -d $(DESTDIR)$(DATADIR)/fbxkb/images
-	install -m 644 *.png $(DESTDIR)$(DATADIR)/fbxkb/images
+CFG := $(wildcard *.cfg)
+RES := $(CFG:%.cfg=%)
 
+all: $(RES)
 
-include $(TOPDIR)/.config/rules.mk
+%: %.cfg
+	sed 's/PREFIX/$(BPREFIX)/g' < $< > $@
+
+clean:
+	$(RM) $(RES) *~
+
+install: 
+	install -d  $(DESTDIR)$(PREFIX)/share/fbxkb
+#	install -m 644 $(RES) $(DESTDIR)$(PREFIX)/share/fbxkb
+	install -d  $(DESTDIR)$(PREFIX)/share/fbxkb/images
+	install -m 644 *.png $(DESTDIR)$(PREFIX)/share/fbxkb/images/
+
+uninstall:
+	rm -rf $(DESTDIR)$(PREFIX)/share/fbxkb

@@ -1,6 +1,18 @@
+# Part 0
+# load common stuff
+TOPDIR = .
+include $(TOPDIR)/Makefile.common
 
-TOPDIR := .
+# Part 1
+# recursive make
+.PHONY: subdirs
+all clean distclean install uninstall: subdirs
 
-SUBDIRS := src images tools
+SUBDIRS = src tools images
+.PHONY: $(SUBDIRS)
+subdirs: $(SUBDIRS)
+$(SUBDIRS):
+	$(MAKE) -C $@ $(MAKECMDGOALS)
 
-include $(TOPDIR)/.config/rules.mk
+
+
