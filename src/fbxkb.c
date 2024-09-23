@@ -201,7 +201,7 @@ gui_create()
 static GdkPixbuf *
 get_flag(char *country_code)
 {
-    char file[] = "tt.png";
+    char file[] = "zz.png";
     
     ENTER;
     DBG("country_code=%s\n", country_code);
@@ -210,7 +210,7 @@ get_flag(char *country_code)
 
     file[0] = country_code[0];
     file[1] = country_code[1];
-    RET(gdk_pixbuf_new_from_file_at_size(file, 24, 24, NULL));
+    RET(gdk_pixbuf_new_from_file_at_scale(file, 20, 13, TRUE, NULL));
 }
 
 /* looks up corrsct flag image for every language group and replaces
