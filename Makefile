@@ -8,7 +8,7 @@ include $(TOPDIR)/Makefile.common
 .PHONY: subdirs
 all clean distclean install uninstall: subdirs
 
-SUBDIRS = src tools images
+SUBDIRS = src tools images desktop icons
 .PHONY: $(SUBDIRS)
 subdirs: $(SUBDIRS)
 $(SUBDIRS):

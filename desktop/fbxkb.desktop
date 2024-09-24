@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=fbxkb
+GenericName=X11 keyboard switcher
+GenericName[ru]=Переключатель раскладки клавиатуры
+Comment=X11 keyboard layout indicator and switcher
+Comment[ru]=Индикатор и переключатель раскладки клавиатуры для X11
+Type=Application
+Exec=fbxkb
+Icon=fbxkb
+Terminal=false
+Categories=Utility;Accessibility;X-Desktop;
