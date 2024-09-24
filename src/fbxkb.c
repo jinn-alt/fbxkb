@@ -90,7 +90,7 @@ menu_about(GtkWidget *widget, gpointer data)
             "license", "GPLv2",
             "version", PROJECT_VERSION,
             "website", "http://fbxkb.sf.net",
-            "logo-icon-name", "preferences-desktop-keyboard",
+            "logo-icon-name", "fbxkb",
             NULL);
     RET();
 }
