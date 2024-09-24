@@ -35,7 +35,7 @@ static int display_version;
 static GOptionEntry entries[] =
 {
     { "hide-default", 0, 0, G_OPTION_ARG_NONE, &hide_default, 
-        "Hide flag when default keyboard is active", NULL },
+        "Hide flag when default keyboard layout is active", NULL },
     { "version", 0, 0, G_OPTION_ARG_NONE, &display_version, 
         "Display the version and exit", NULL },
     { NULL }
@@ -213,7 +213,7 @@ get_flag(char *country_code)
     RET(gdk_pixbuf_new_from_file_at_scale(file, 20, 13, TRUE, NULL));
 }
 
-/* looks up corrsct flag image for every language group and replaces
+/* looks up correct flag image for every language group and replaces
  * default_flag image when it is found.
  * Flag is derived from xkb symbolic name, that looks something like that
  *    pc(pc105)+us+ru(phonetic):2+il(phonetic):3+group(shifts_toggle)+group(switch)
@@ -437,7 +437,7 @@ main(int argc, char *argv[])
         exit(1);
     }
     if (display_version) {
-        printf("%s %s\n", g_get_prgname(), PROJECT_VERSION);
+        printf("%s version %s\n", g_get_prgname(), PROJECT_VERSION);
         exit(0);
     }
     init();
