@@ -40,7 +40,14 @@ static GOptionEntry entries[] =
         "Display the version and exit", NULL },
     { NULL }
 };
-static char *desription = "row 1\nrow 2\n";
+const char *desription = \
+"FBXkb is simple and lightweight X11 keyboard switcher, which provides visual\n" \
+"information about current keyboard layout. It shows a flag of current keyboard\n" \
+"layout in a systray area and allows you to switch to another one.\n\n" \
+"FBXkb requires NETWM (www.freedesktop.org) compliant window manager to work.\n" \
+"It's written in C and uses the GTK+2 library only (no GNOME is needed).\n\n" \
+"Most updated info about fbxkb can be found on its home page:\n" \
+"http://fbxkb.sf.net/\n";
 
 static int cur_group;
 static int ngroups;

@@ -1,0 +1,7 @@
+FBXkb is simple and lightweight X11 keyboard switcher, which provides visual
+information about current keyboard layout. It shows a flag of current keyboard
+layout in a systray area and allows you to switch to another one.
+FBXkb requires NETWM (www.freedesktop.org) compliant window manager to work.
+It's written in C and uses the GTK+2 library only (no GNOME is needed).
+Most updated info about fbxkb can be found on its home page:
+http://fbxkb.sf.net/
