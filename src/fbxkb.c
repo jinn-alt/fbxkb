@@ -89,13 +89,18 @@ tooltip_set()
 static void
 menu_about(GtkWidget *widget, gpointer data)
 {
-    gchar *authors[] = { "Anatoly Asviyan <aanatoly@users.sf.net>", NULL };
+    gchar *authors[] = {
+    "Anatoly Asviyan <aanatoly@users.sf.net>",
+    "Vadim Vatlin <vatlin@sthbel.ru>",
+    "Dmitriy Khanzhin <jinn@altlinux.org>",
+    NULL };
     ENTER;
     gtk_show_about_dialog(NULL, 
-            "authors", authors,
-            "comments", "X11 keyboard language switcher", 
-            "license", "GPLv2",
+            "name", "FBXkb",
             "version", PROJECT_VERSION,
+            "comments", "X11 keyboard layout indicator and switcher", 
+            "authors", authors,
+            "license", "GPLv2",
             "website", "http://fbxkb.sf.net",
             "logo-icon-name", "fbxkb",
             NULL);
@@ -429,7 +434,7 @@ main(int argc, char *argv[])
 
     ENTER;
     setlocale(LC_ALL, "");
-    context = g_option_context_new("- X11 keyboard switcher");
+    context = g_option_context_new("- X11 keyboard indicator and switcher");
     g_option_context_add_main_entries(context, entries, NULL);
     g_option_context_add_group(context, gtk_get_option_group(TRUE));
     g_option_context_set_description(context, desription);
