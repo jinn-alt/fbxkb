@@ -14,7 +14,6 @@ help () {
 }
 
 PREFIX="/usr"
-LIBEXECDIR="$PREFIX/lib"
 DEBUG=0
 while [ $# -gt 0 ]; do
     case $1 in
@@ -24,7 +23,6 @@ while [ $# -gt 0 ]; do
             ;;
         --prefix=*)
             PREFIX=`echo $1 | sed 's/--prefix=//'`
-            LIBEXECDIR="$PREFIX/lib"
             ;;
 	--debug)
 	    DEBUG=1
@@ -44,7 +42,6 @@ echo "Installation prefix is $PREFIX"
 echo "updating src/config.h"
 echo "//created by ./configure script" > src/config.h
 echo "#define PREFIX \"$PREFIX\"" >> src/config.h
-echo "#define LIBEXECDIR \"$LIBEXECDIR\"" >> src/config.h
 if [ $DEBUG -eq 1 ]; then
 echo "#define DEBUG $DEBUG" >> src/config.h
                      else
@@ -57,5 +54,3 @@ fi
 echo "updating Makefile"
 echo "PREFIX:=$PREFIX" > Makefile.config
 echo "DEBUG:=$DEBUG" >> Makefile.config
-echo "LIBEXECDIR:=$LIBEXECDIR" >> Makefile.config
-

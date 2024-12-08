@@ -15,6 +15,7 @@
 #include <gdk/gdkx.h>
 
 #include <X11/XKBlib.h>
+#include <X11/extensions/XKBrules.h>
 
 #include "config.h"
 #include "version.h"
@@ -65,24 +66,54 @@ static GdkFilterReturn filter( XEvent *xev, GdkEvent *event, gpointer data);
 static void
 tooltip_set()
 {
-
-    gchar *argv[] = { LIBEXECDIR "/fbxkb/options.sh", NULL };
-    gchar *text;
-    gint standard_output;
-    gsize len;
-    GIOChannel *gio;
+#define textLen 256
+    gchar text[textLen] = {};
+    gchar *strStab =    "<tt>";
+    gchar *strModel =   "<b>Keyboard model:</b>\t";
+    gchar *strCurrent = "<b>Current layout:</b>\t";
+    gchar *strLayouts = "<b>Layouts:</b>\t";
+    gchar *strOptions = "<b>Options:</b>\t";
+    gchar *str2tab =     "\t\t";
+    gchar *strEol =     "\n";
+    gchar *strEtab =    "</tt>";
+//    gchar *symbols;
+    gchar *tok, *xkb_options, *xkb_tmp;
+    gint num = 0;
+    XkbRF_VarDefsRec xkb_vdr;
+//    XkbDescPtr xkb_desc;
+    XkbStateRec xkb_state;
 
     ENTER;
-    if (!g_spawn_async_with_pipes(NULL, argv, NULL, 0, NULL, NULL, NULL, NULL,
-                &standard_output, NULL, NULL))
-        RET();
-    gio = g_io_channel_unix_new (standard_output);
-    if (g_io_channel_read_to_end(gio, &text, &len, NULL) == G_IO_STATUS_NORMAL) {
-        g_strchomp(text);
-        gtk_status_icon_set_tooltip_markup(icon, text);
+
+    XkbRF_GetNamesProp(dpy, &xkb_tmp, &xkb_vdr);
+    XkbGetState(dpy, XkbUseCoreKbd, &xkb_state);
+//    xkb_desc = XkbGetKeyboard(dpy, XkbAllComponentsMask, XkbUseCoreKbd);
+//    symbols = XGetAtomName(dpy, XkbGetKeyboard(dpy, XkbAllComponentsMask, XkbUseCoreKbd)->names->groups[xkb_state.group]);
+
+    strlcat(text, strStab, textLen);
+    strlcat(text, strModel, textLen);
+    strlcat(text, xkb_vdr.model, textLen);
+    strlcat(text, strEol, textLen);
+    strlcat(text, strCurrent, textLen);
+    strlcat(text, XGetAtomName(dpy, XkbGetKeyboard(dpy, XkbAllComponentsMask, XkbUseCoreKbd)->names->groups[xkb_state.group]), textLen);
+    strlcat(text, strEol, textLen);
+    strlcat(text, strLayouts, textLen);
+    strlcat(text, xkb_vdr.layout, textLen);
+    
+    for (tok = strtok((xkb_options = xkb_vdr.options), ","); tok; tok = strtok(NULL, ",")) {
+    strlcat(text, strEol, textLen);
+    if (num == 0) {
+    strlcat(text, strOptions, textLen);
+    } else {
+    strlcat(text, str2tab, textLen);
     }
-    g_io_channel_shutdown(gio, FALSE, NULL);
-    g_free(text);
+    strlcat(text, tok, textLen);
+    num++;
+    }
+    if (strlcat(text, strEtab, textLen) >= sizeof(text)) ERR("Out of text length\n");
+
+    gtk_status_icon_set_tooltip_markup(icon, text);
+
     RET();
 }
 
@@ -172,6 +203,7 @@ clicked(GtkStatusIcon  *status_icon, GdkEventButton *event, gpointer data)
                 gtk_status_icon_position_menu, icon, event->button,
                 event->time);
     }
+    tooltip_set();
     RET(FALSE);
 }
 
@@ -365,6 +397,7 @@ filter( XEvent *xev, GdkEvent *event, gpointer data)
             ERR("current group is bigger then total group number");
             cur_group = 0;
         }
+        tooltip_set();
         gui_update();
     } else if (xkbev->any.xkb_type == XkbNewKeyboardNotify) {         
         DBG("XkbNewKeyboardNotify\n");
