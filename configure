@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#echo "fbxkb configuration script"
+#echo "FBXkb configuration script"
 
 help () {
     echo "supported options are:"
@@ -9,11 +9,11 @@ help () {
     echo "       <path>/bin - will hold all binaries"
     echo "       <path>/share/fbxkb - config files, pixmaps etc"
     echo "       default <path> is /usr"
-    echo "--debug - enable devel mode: no optimization + debug symbols"
-    echo "--transparency - enable EXPERIMENTAL transparency support"
+    echo "--debug - enable debug mode: no optimization + debug symbols"
 }
 
 PREFIX="/usr"
+IMGPREFIX="$PREFIX/share/fbxkb/images/"
 DEBUG=0
 while [ $# -gt 0 ]; do
     case $1 in
@@ -27,9 +27,6 @@ while [ $# -gt 0 ]; do
 	--debug)
 	    DEBUG=1
 	    ;;
-	--transparency)
-	    TRANSPARENCY=true
-	    ;;
         *)
             echo "unknwon option $1"
             help
@@ -42,15 +39,14 @@ echo "Installation prefix is $PREFIX"
 echo "updating src/config.h"
 echo "//created by ./configure script" > src/config.h
 echo "#define PREFIX \"$PREFIX\"" >> src/config.h
+echo "#define IMGPREFIX \"$IMGPREFIX\"" >> src/config.h
 if [ $DEBUG -eq 1 ]; then
 echo "#define DEBUG $DEBUG" >> src/config.h
                      else
 echo "#undef DEBUG" >> src/config.h
 fi
-if [ "x$TRANSPARENCY" != "x" ]; then
-	echo "#define TRANSPARENCY"
-fi
 
 echo "updating Makefile"
 echo "PREFIX:=$PREFIX" > Makefile.config
+echo "IMGPREFIX:=$IMGPREFIX" >> Makefile.config
 echo "DEBUG:=$DEBUG" >> Makefile.config

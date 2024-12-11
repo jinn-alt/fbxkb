@@ -59,7 +59,6 @@ static GdkPixbuf *default_flag;
 static GtkStatusIcon *icon;
 static GtkWidget *menu;
 
-#define IMGPREFIX PREFIX "/share/fbxkb/images/"
 static void Xerror_handler(Display * d, XErrorEvent * ev);
 static GdkFilterReturn filter( XEvent *xev, GdkEvent *event, gpointer data);
 
