@@ -3,7 +3,7 @@
 
 
 /* do not change this line - Makefile's 'tar' target depends on it */
-#define PROJECT_VERSION "0.6"
+#define PROJECT_VERSION "0.7"
 
 
 #endif

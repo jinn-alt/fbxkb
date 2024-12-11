@@ -1,3 +1,13 @@
+0.7
+[Dmitriy Khanzhin <jinn@altlinux.org>]
+* fixed build by replace deprecated GDK functions
+* added icons and .desktop files to show fbxkb in menu
+* fixed logo icon name
+* changed the scaling to display an icon in the tray correctly
+* fixed the default flag file name
+* created tooltip using xkb functions
+* do not hardcode IMGPREFIX, define it in 'configure'
+
 0.6
 * Makefile does not include .svn in a tarball
 * if xorg has no groups fbxkb creates fallback 'us' group to display
