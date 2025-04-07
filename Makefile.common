@@ -10,22 +10,31 @@ $(TOPDIR)/Makefile.config:
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),distclean)
 ifneq ($(MAKECMDGOALS),tar)
--include $(TOPDIR)/Makefile.config
+include $(TOPDIR)/Makefile.config
 endif
 endif
 endif
 
 CC = gcc
+ifeq (,$(GTK3))
 LIBS = $(shell pkg-config --libs gtk+-2.0 gdk-pixbuf-2.0) -lX11 -lxkbfile
-INCS = $(shell pkg-config --cflags gtk+-2.0 gdk-pixbuf-2.0)
+INCS = $(shell pkg-config --cflags gtk+2.0 gdk-pixbuf-2.0)
+else
+LIBS = $(shell pkg-config --libs gtk+-3.0 gdk-pixbuf-2.0) -lX11 -lxkbfile
+INCS = $(shell pkg-config --cflags gtk+-3.0 gdk-pixbuf-2.0)
+endif
 CFLAGS = -O2    # overwriten by command line or env. variable
 CFLAGS += -Wall # always nice to have 
 ifneq (,$(DEBUG))
 CFLAGS := -g -Wall 
 endif
 
+ifeq (,$(GTK3))
 # -DGTK_DISABLE_DEPRECATED does not work yet
 CFLAGS += -g -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
+else
+CFLAGS += -g    # -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
+endif
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCS) -c $<
