@@ -1,3 +1,7 @@
+0.8
+[Dmitriy Khanzhin <jinn@altlinux.org>]
+* added requires for build with gtk3
+
 0.7
 [Dmitriy Khanzhin <jinn@altlinux.org>]
 * fixed build by replace deprecated GDK functions
